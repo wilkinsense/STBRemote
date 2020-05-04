@@ -1,4 +1,5 @@
 #include "TimerMgr.h"
+#include <Arduino.h>
 
 TimerMgr::TimerMgr()
 {

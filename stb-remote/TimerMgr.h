@@ -1,7 +1,7 @@
 #ifndef TIMER_Mgr
 #define TIMER_Mgr
 
-#include <ESP8266WiFi.h>
+#include <functional>
 #include <vector>
 #include "Timer.h"
 
@@ -15,7 +15,6 @@ public:
 
 private:
   std::vector<Timer*> m_timers;
-  
 };
 
 #endif
