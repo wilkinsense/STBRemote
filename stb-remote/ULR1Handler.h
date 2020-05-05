@@ -15,7 +15,7 @@ class ULR1Handler : public IRRemoteHandler
         virtual bool HandleRCUCommand(String command, IRsend irsend) override;
     private:
         static std::map<uint32_t, String> m_hexToButtonMap;
-        static std::map<String, std::vector<uint16_t *>> m_nameToArrayMap;
+        static std::map<String, uint16_t *> m_nameToArrayMap;
 };
 
 #endif //__ULR1_REMOTE_HANDLER

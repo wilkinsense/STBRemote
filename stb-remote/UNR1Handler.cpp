@@ -96,7 +96,7 @@ std::map<uint32_t, String> UNR1Handler::m_hexToButtonMap = {
   { 0x61F441BE, "UNR1_BTN_MENU" }
 };
 
-/*std::map<String, uint16_t *> UNR1Handler::m_nameToArrayMap = {
+std::map<String, uint16_t *> UNR1Handler::m_nameToArrayMap = {
 // RCU buttons
   { "UNR1_BTN_NUM_1", UNR1_BTN_NUM_1 },
   { "UNR1_BTN_NUM_2", UNR1_BTN_NUM_2 },
@@ -133,7 +133,7 @@ std::map<uint32_t, String> UNR1Handler::m_hexToButtonMap = {
   { "UNR1_BTN_ONDEMAND", UNR1_BTN_ONDEMAND },
 
   { "UNR1_BTN_STOP", UNR1_BTN_STOP },
-  { "UNR1_BTN_R", UNR1_BTN_R },
+  { "UNR1_BTN_RED", UNR1_BTN_RED },
   { "UNR1_BTN_REWIND", UNR1_BTN_REWIND },
   { "UNR1_BTN_PLAYPAUSE", UNR1_BTN_PLAYPAUSE },
   { "UNR1_BTN_FASTFORWARD", UNR1_BTN_FASTFORWARD },
@@ -143,9 +143,9 @@ std::map<uint32_t, String> UNR1Handler::m_hexToButtonMap = {
   { "UNR1_BTN_PWR_ON", UNR1_BTN_PWR_ON },
   { "UNR1_BTN_PWR_OFF", UNR1_BTN_PWR_OFF },
   { "UNR1_BTN_MENU", UNR1_BTN_MENU }
-};*/
+};
 
-std::map<String, uint16_t> UNR1Handler::m_nameToArrayMap = {
+/*std::map<String, uint16_t> UNR1Handler::m_nameToArrayMap = {
 // RCU buttons
   { "UNR1_BTN_NUM_1", 0x61F440BF },
   { "UNR1_BTN_NUM_2", 0x61F4C837 },
@@ -192,7 +192,7 @@ std::map<String, uint16_t> UNR1Handler::m_nameToArrayMap = {
   { "UNR1_BTN_PWR_ON", 0x61F4758A },
   { "UNR1_BTN_PWR_OFF", 0x61F47689 },
   { "UNR1_BTN_MENU", 0x61F441BE }
-};
+};*/
 
 UNR1Handler::UNR1Handler() { }
 UNR1Handler::~UNR1Handler() { }
@@ -207,8 +207,8 @@ bool UNR1Handler::HandleRCUCommand(String command, IRsend irsend)
     auto it = m_nameToArrayMap.find(command);
     if (it != m_nameToArrayMap.end())
     {
-        //irsend.sendRaw(it->second, 67, 38); // 38 = kHz
-        irsend.sendNEC(it->second, 67);
+        irsend.sendRaw(it->second, 67, 38); // 38 = kHz
+        //irsend.sendNEC(it->second, 67);
         return true;
     }
     return false;

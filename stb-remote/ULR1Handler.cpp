@@ -1,7 +1,5 @@
 #include "ULR1Handler.h"
 #include <SPI.h>
-#define ULR1_CODE_REPEAT_COUNT 4
-
 uint16_t ULR1_BTN_DELIMITER_CODE[19] = {6042, 1224,  1208, 1214,  606, 608,  604, 1238,  578, 1240,  576, 1232,  584, 1240,  580, 626,  584, 606,  606};  // UNKNOWN E3DC5833
 
 uint16_t ULR1_BTN_NUM_1[19] = {6044, 1222,  1178, 1262,  588, 608,  548, 662,  548, 662,  574, 638,  550, 1286,  530, 662,  550, 1268,  548};  // UNKNOWN C9767F76
@@ -105,53 +103,53 @@ std::map<uint32_t, String> ULR1Handler::m_hexToButtonMap = {
   { 0x76CF1379, "ULR1_BTN_MENU" }
 };
 
-std::map<String, std::vector<uint16_t *>> ULR1Handler::m_nameToArrayMap
+std::map<String, uint16_t *> ULR1Handler::m_nameToArrayMap
 {
-    { "ULR1_BTN_NUM_1",         std::vector<uint16_t *> { ULR1_BTN_NUM_1,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_2",         std::vector<uint16_t *> { ULR1_BTN_NUM_2,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_3",         std::vector<uint16_t *> { ULR1_BTN_NUM_3,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_4",         std::vector<uint16_t *> { ULR1_BTN_NUM_4,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_5",         std::vector<uint16_t *> { ULR1_BTN_NUM_5,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_6",         std::vector<uint16_t *> { ULR1_BTN_NUM_6,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_7",         std::vector<uint16_t *> { ULR1_BTN_NUM_7,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_8",         std::vector<uint16_t *> { ULR1_BTN_NUM_8,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_9",         std::vector<uint16_t *> { ULR1_BTN_NUM_9,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_0",         std::vector<uint16_t *> { ULR1_BTN_NUM_0,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_DASH",      std::vector<uint16_t *> { ULR1_BTN_NUM_DASH,        ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NUM_ENTER",     std::vector<uint16_t *> { ULR1_BTN_NUM_ENTER,       ULR1_BTN_DELIMITER_CODE } },
+    { "ULR1_BTN_NUM_1",         ULR1_BTN_NUM_1 },
+    { "ULR1_BTN_NUM_2",         ULR1_BTN_NUM_2 },
+    { "ULR1_BTN_NUM_3",         ULR1_BTN_NUM_3 },
+    { "ULR1_BTN_NUM_4",         ULR1_BTN_NUM_4 },
+    { "ULR1_BTN_NUM_5",         ULR1_BTN_NUM_5 },
+    { "ULR1_BTN_NUM_6",         ULR1_BTN_NUM_6 },
+    { "ULR1_BTN_NUM_7",         ULR1_BTN_NUM_7 },
+    { "ULR1_BTN_NUM_8",         ULR1_BTN_NUM_8 },
+    { "ULR1_BTN_NUM_9",         ULR1_BTN_NUM_9 },
+    { "ULR1_BTN_NUM_0",         ULR1_BTN_NUM_0 },
+    { "ULR1_BTN_NUM_DASH",      ULR1_BTN_NUM_DASH },
+    { "ULR1_BTN_NUM_ENTER",     ULR1_BTN_NUM_ENTER },
 
-    { "ULR1_BTN_VOL_UP",        std::vector<uint16_t *> { ULR1_BTN_VOL_UP,          ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_VOL_DOWN",      std::vector<uint16_t *> { ULR1_BTN_VOL_DOWN,        ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_VOL_MUTE",      std::vector<uint16_t *> { ULR1_BTN_VOL_MUTE,        ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_CHAN_UP",       std::vector<uint16_t *> { ULR1_BTN_CHAN_UP,         ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_CHAN_DOWN",     std::vector<uint16_t *> { ULR1_BTN_CHAN_DOWN,       ULR1_BTN_DELIMITER_CODE } },
+    { "ULR1_BTN_VOL_UP",        ULR1_BTN_VOL_UP },
+    { "ULR1_BTN_VOL_DOWN",      ULR1_BTN_VOL_DOWN },
+    { "ULR1_BTN_VOL_MUTE",      ULR1_BTN_VOL_MUTE },
+    { "ULR1_BTN_CHAN_UP",       ULR1_BTN_CHAN_UP },
+    { "ULR1_BTN_CHAN_DOWN",     ULR1_BTN_CHAN_DOWN },
     
-    { "ULR1_BTN_GUIDE",         std::vector<uint16_t *> { ULR1_BTN_GUIDE,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_ACTIVE",        std::vector<uint16_t *> { ULR1_BTN_ACTIVE,          ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_LIST",          std::vector<uint16_t *> { ULR1_BTN_LIST,            ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_EXIT",          std::vector<uint16_t *> { ULR1_BTN_EXIT,            ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_UP",            std::vector<uint16_t *> { ULR1_BTN_UP,              ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_RIGHT",         std::vector<uint16_t *> { ULR1_BTN_RIGHT,           ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_DOWN",          std::vector<uint16_t *> { ULR1_BTN_DOWN,            ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_LEFT",          std::vector<uint16_t *> { ULR1_BTN_LEFT,            ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_SELECT",        std::vector<uint16_t *> { ULR1_BTN_SELECT,          ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_PREV",          std::vector<uint16_t *> { ULR1_BTN_PREV,            ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_RED",           std::vector<uint16_t *> { ULR1_BTN_RED,             ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_INFO",          std::vector<uint16_t *> { ULR1_BTN_INFO,            ULR1_BTN_DELIMITER_CODE } },
+    { "ULR1_BTN_GUIDE",         ULR1_BTN_GUIDE },
+    { "ULR1_BTN_ACTIVE",        ULR1_BTN_ACTIVE },
+    { "ULR1_BTN_LIST",          ULR1_BTN_LIST },
+    { "ULR1_BTN_EXIT",          ULR1_BTN_EXIT },
+    { "ULR1_BTN_UP",            ULR1_BTN_UP },
+    { "ULR1_BTN_RIGHT",         ULR1_BTN_RIGHT },
+    { "ULR1_BTN_DOWN",          ULR1_BTN_DOWN },
+    { "ULR1_BTN_LEFT",          ULR1_BTN_LEFT },
+    { "ULR1_BTN_SELECT",        ULR1_BTN_SELECT },
+    { "ULR1_BTN_PREV",          ULR1_BTN_PREV },
+    { "ULR1_BTN_RED",           ULR1_BTN_RED },
+    { "ULR1_BTN_INFO",          ULR1_BTN_INFO },
 
-    { "ULR1_BTN_ONDEMAND",      std::vector<uint16_t *> { ULR1_BTN_ONDEMAND,        ULR1_BTN_DELIMITER_CODE } },
+    { "ULR1_BTN_ONDEMAND",      ULR1_BTN_ONDEMAND },
     
-    { "ULR1_BTN_STOP",          std::vector<uint16_t *> { ULR1_BTN_STOP,            ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_RECORD",        std::vector<uint16_t *> { ULR1_BTN_RECORD,          ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_REWIND",        std::vector<uint16_t *> { ULR1_BTN_REWIND,          ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_PLAYPAUSE",     std::vector<uint16_t *> { ULR1_BTN_PLAYPAUSE,       ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_FASTFORWARD",   std::vector<uint16_t *> { ULR1_BTN_FASTFORWARD,     ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_REPEAT",        std::vector<uint16_t *> { ULR1_BTN_REPEAT,          ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_NEXT",          std::vector<uint16_t *> { ULR1_BTN_NEXT,            ULR1_BTN_DELIMITER_CODE } },
+    { "ULR1_BTN_STOP",          ULR1_BTN_STOP },
+    { "ULR1_BTN_RECORD",        ULR1_BTN_RECORD },
+    { "ULR1_BTN_REWIND",        ULR1_BTN_REWIND },
+    { "ULR1_BTN_PLAYPAUSE",     ULR1_BTN_PLAYPAUSE },
+    { "ULR1_BTN_FASTFORWARD",   ULR1_BTN_FASTFORWARD },
+    { "ULR1_BTN_REPEAT",        ULR1_BTN_REPEAT },
+    { "ULR1_BTN_NEXT",          ULR1_BTN_NEXT },
 
-    { "ULR1_BTN_PWR_ON",        std::vector<uint16_t *> { ULR1_BTN_PWR_ON_CODE1,    ULR1_BTN_PWR_ON_CODE2,  ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_PWR_OFF",       std::vector<uint16_t *> { ULR1_BTN_PWR_OFF_CODE1,   ULR1_BTN_PWR_OFF_CODE2, ULR1_BTN_DELIMITER_CODE } },
-    { "ULR1_BTN_MENU",          std::vector<uint16_t *> { ULR1_BTN_STOP,            ULR1_BTN_DELIMITER_CODE } },
+    { "ULR1_BTN_PWR_ON",        ULR1_BTN_PWR_ON_CODE1 },
+    { "ULR1_BTN_PWR_OFF",       ULR1_BTN_PWR_OFF_CODE1 },
+    { "ULR1_BTN_MENU",          ULR1_BTN_MENU },
 };
 
 ULR1Handler::ULR1Handler() { }
@@ -175,14 +173,7 @@ bool ULR1Handler::HandleRCUCommand(String command, IRsend irsend)
     auto it = m_nameToArrayMap.find(command);
     if (it != m_nameToArrayMap.end())
     {
-        for (auto codeArray : it->second)
-        {
-            for (int index = 0; index < ULR1_CODE_REPEAT_COUNT; index++)
-            {
-                irsend.sendRaw(codeArray, 19, 38); // 38 = kHz
-                delay(100);
-            }
-        }
+        irsend.sendRaw(it->second, 19, 38); // 38 = kHz
         return true;
     }
     return false;
