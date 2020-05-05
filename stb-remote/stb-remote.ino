@@ -17,41 +17,42 @@ TimerMgr* m_timer;
 
 IRrecv irrecv(RECV_PIN);
 IRsend irsend(IR_LED);
-bool m_bSend = false;
-bool m_bReadFromSerial = false;
+bool m_bSendIRToBox = true;
+bool m_bReadFromSerial = true;
+bool m_bOutputIRRemoteInformation = false;
 
 decode_results results;
 
 std::vector<IRRemoteHandler *> m_RCUHandlers;
 
 void handleRecord() {
-  /*String output = "";
+  String output = "";
   if (irrecv.decode(&results)) {
     output += resultToHexidecimal(&results);
     irrecv.resume();  // Receive the next value
 
-    uint32_t intValue = (uint32_t)strtol(output.c_str(), 0, 16);
+    uint32_t intValue = (uint32_t)strtoul(output.c_str(), 0, 16);
     output += '\n';
-    output += resultToSourceCode(&results);
+    if (m_bOutputIRRemoteInformation)
+    {
+      output += resultToSourceCode(&results);
+    }
     Serial.print(output);
     //Serial.print(" : ");
 
-    std::map<uint32_t, String>::iterator it;
-    it = m_hexToButtonMap.find(intValue);
-
-    if (it != m_hexToButtonMap.end())
+    for (size_t rcuIndex = 0; rcuIndex < m_RCUHandlers.size(); rcuIndex++)
     {
-      Serial.print(it->second);
-      Serial.println(" pressed!");
-    }
-    else
-    {
-      //Serial.println("Button unrecognized!");
+        Serial.println("Identifying...");
+        IRRemoteHandler *handler = m_RCUHandlers[rcuIndex];
+        if (handler->IdentifyRCUCommand(intValue))
+        {
+            break;
+        }
     }
   } 
   else {
     //output = "empty";
-  }*/ 
+  }
 }
 
 void setup()
@@ -85,7 +86,7 @@ String command;
 void loop()
 {
     //
-    if (m_bSend)
+    if (m_bSendIRToBox)
     {
         handleSend(m_bReadFromSerial);
     }

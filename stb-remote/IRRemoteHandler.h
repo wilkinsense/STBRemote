@@ -10,7 +10,7 @@ class IRRemoteHandler
         IRRemoteHandler() {}
         virtual ~IRRemoteHandler() {}
         
-        virtual bool IdentifyRCUCommand(uint16_t command) = 0;
+        virtual bool IdentifyRCUCommand(uint32_t command) = 0;
         virtual bool HandleRCUCommand(String command, IRsend irsend) = 0;
     private:
 };

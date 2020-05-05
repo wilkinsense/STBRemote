@@ -10,7 +10,7 @@ class UNR1Handler : public IRRemoteHandler
         UNR1Handler();
         virtual ~UNR1Handler();
         
-        virtual bool IdentifyRCUCommand(uint16_t command) override;
+        virtual bool IdentifyRCUCommand(uint32_t command) override;
         virtual bool HandleRCUCommand(String command, IRsend irsend) override;
     private:
         static std::map<uint32_t, String> m_hexToButtonMap;
